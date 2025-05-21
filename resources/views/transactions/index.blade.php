@@ -1,12 +1,44 @@
-<style>
-.balance-box {
-    background-color: #f0f9ff;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-left: 5px solid #007bff;
-}
-</style>
+@extends('layouts.app')
 
-<div class="balance-box">
-    <h2>Joriy balans: {{ number_format($balance, 2) }} so'm</h2>
+@section('content')
+<div class="container">
+    <h2>Tranzaksiyalar ro‘yxati</h2>
+
+    <a href="{{ route('transactions.create') }}" class="btn btn-success mb-3">Yangi tranzaksiya qo‘shish</a>
+
+    @if($transactions->count())
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tur</th>
+                    <th>Summasi</th>
+                    <th>Tavsif</th>
+                    <th>Qo‘shilgan sana</th>
+                    <th>Amallar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($transactions as $transaction)
+                <tr>
+                    <td>{{ $transaction->id }}</td>
+                    <td>{{ $transaction->type }}</td>
+                    <td>{{ $transaction->amount }}</td>
+                    <td>{{ $transaction->description }}</td>
+                    <td>{{ $transaction->created_at->format('Y-m-d H:i') }}</td>
+                    <td>
+                        <form action="{{ route('transactions.destroy', $transaction->id) }}" method="POST" onsubmit="return confirm('Rostdan o‘chirmoqchimisiz?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">O‘chirish</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p>Hali tranzaksiya yo‘q.</p>
+    @endif
 </div>
+@endsection
