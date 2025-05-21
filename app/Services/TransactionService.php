@@ -53,4 +53,8 @@ class TransactionService
         return $query->latest()->get();
     }
 
+    public function getTotalAmountByType(string $type): float
+    {
+        return Transaction::where('type', $type)->sum('amount');
+    }
 }

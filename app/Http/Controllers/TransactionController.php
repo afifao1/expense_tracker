@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers;
-
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
 
@@ -27,18 +26,33 @@ class TransactionController extends Controller
         return view('transactions.create');
     }
 
+
     public function store(Request $request)
     {
         $data = $request->validate([
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:0.01',
             'type' => 'required|in:income,expense',
             'description' => 'nullable|string',
         ]);
 
+        if ($data['type'] === 'expense') {
+            $totalIncome = $this->service->getTotalAmountByType('income');
+            $totalExpense = $this->service->getTotalAmountByType('expense');
+            $currentBalance = $totalIncome - $totalExpense;
+
+            if ($data['amount'] > $currentBalance) {
+                return redirect()->back()
+                    ->withErrors(['amount' => 'Chiqim summasi hisobingizdagi mablag‘dan katta bo‘lishi mumkin emas!'])
+                    ->withInput();
+            }
+        }
+
         $this->service->create($data);
 
-        return redirect()->route('transactions.index')->with('success', 'Tranzaksiya muvaffaqiyatli qo\'shildi!');
+        return redirect()->route('transactions.index')->with('success', 'Tranzaksiya muvaffaqiyatli qo‘shildi!');
     }
+
+
 
     public function balance()
     {

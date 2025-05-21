@@ -28,7 +28,7 @@
 
         <div class="mb-3">
             <label for="amount" class="form-label">Summasi</label>
-            <input type="number" step="0.01" name="amount" id="amount" class="form-control" required>
+            <input type="number" step="0.01" min="0" name="amount" id="amount" class="form-control" required>
         </div>
 
         <div class="mb-3">
