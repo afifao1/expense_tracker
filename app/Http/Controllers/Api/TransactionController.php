@@ -43,7 +43,7 @@ class TransactionController extends Controller
             'balance' => $this->service->getBalance()
         ]);
     }
-    
+
     public function filterByPeriod($period)
     {
         return $this->service->listByPeriod($period);

@@ -30,7 +30,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'amount' => 'required|numeric|min:0.01',
+            'amount' => 'required|numeric|max:99999999999999999999999999999',
             'type' => 'required|in:income,expense',
             'description' => 'nullable|string',
         ]);
