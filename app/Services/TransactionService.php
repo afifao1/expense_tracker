@@ -23,8 +23,7 @@ class TransactionService
 
     public function update(Transaction $transaction, array $data)
     {
-        $transaction->update($data);
-        return $transaction;
+        return $transaction->update($data);
     }
 
     public function delete(Transaction $transaction)
