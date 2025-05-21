@@ -44,4 +44,8 @@
     <a href="{{ route('balance') }}" class="btn btn-outline-secondary m-1">Balans</a>
     <a href="{{ route('monitor') }}" class="btn btn-outline-secondary m-1">Monitoring</a>
 </div>
+<a href="https://github.com/afifao1/expense_tracker" target="_blank" class="px-4 py-2 bg-gray-800 text-dark rounded hover:bg-gray-700">
+    GitHub’da ko‘rish
+</a>
+
 @endsection
