@@ -13,7 +13,6 @@ class TransactionController extends Controller
         $this->service = $service;
     }
 
-    // Barcha tranzaksiyalar ro'yxati
     public function index()
     {
         $transactions = $this->service->list();
@@ -23,13 +22,11 @@ class TransactionController extends Controller
     }
 
 
-    // Yangi tranzaksiya qo'shish uchun forma
     public function create()
     {
         return view('transactions.create');
     }
 
-    // Tranzaksiyani saqlash
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -56,7 +53,7 @@ class TransactionController extends Controller
 
     public function monitor()
     {
-        $transactions = $this->service->list()->take(10); // oxirgi 10 ta
+        $transactions = $this->service->list()->take(10);
 
         return view('transactions.monitor', compact('transactions'));
     }
