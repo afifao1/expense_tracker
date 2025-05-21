@@ -1,0 +1,34 @@
+name: 🚀 Deploy Laravel App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: 🧳 Deploy to Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⏬ Checkout Code
+        uses: actions/checkout@v3
+
+      - name: 🔐 Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+      - name: 🚀 Deploy via SSH
+        run: |
+          ssh root@185.191.141.44 << 'EOF'
+            cd /var/www/afifa/expense_tracker
+            git pull origin main
+            docker exec afifa-expense-app composer install --no-interaction --prefer-dist --optimize-autoloader
+            docker exec afifa-expense-app php artisan config:clear
+            docker exec afifa-expense-app php artisan view:clear
+            docker exec afifa-expense-app php artisan cache:clear
+            docker exec afifa-expense-app php artisan config:cache
+          EOF
