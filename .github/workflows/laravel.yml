@@ -19,12 +19,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEYY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          echo -e "Host *\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+          ssh-keyscan -H 185.191.141.44 >> ~/.ssh/known_hosts
 
       - name: 🚀 Deploy via SSH
         run: |
-          ssh root@185.191.141.44 << 'EOF'
-            cd /var/www/afifa/expense_tracker
+          ssh afifa@185.191.141.44 << 'EOF'
+            cd /home/afifa/expense_tracker
             git pull origin main
             docker exec afifa-expense-app composer install --no-interaction --prefer-dist --optimize-autoloader
             docker exec afifa-expense-app php artisan config:clear
