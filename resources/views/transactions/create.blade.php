@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Yangi tranzaksiya qo‘shish</h2>
+<div class="container py-5">
+    <h2 class="mb-4 text-center">📝 Yangi Tranzaksiya Qo‘shish</h2>
 
     @if ($errors->any())
         <div class="alert alert-danger">
-            <ul>
+            <ul class="mb-0">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('transactions.store') }}" method="POST">
+    <form action="{{ route('transactions.store') }}" method="POST" class="mx-auto" style="max-width: 500px;">
         @csrf
 
         <div class="mb-3">
@@ -36,8 +36,10 @@
             <input type="text" name="description" id="description" class="form-control">
         </div>
 
-        <button type="submit" class="btn btn-primary">Qo‘shish</button>
-        <a href="{{ route('transactions.index') }}" class="btn btn-secondary">Bekor qilish</a>
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">💾 Qo‘shish</button>
+            <a href="{{ route('welcome') }}" class="btn btn-secondary">❌ Bekor qilish</a>
+        </div>
     </form>
 </div>
 @endsection
