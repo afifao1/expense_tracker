@@ -23,7 +23,7 @@ jobs:
 
       - name: 🚀 Deploy via SSH
         run: |
-          ssh afifa@185.191.141.44 << 'EOF'
+          ssh root@185.191.141.44 << 'EOF'
             cd /var/www/afifa/expense_tracker/
             git pull origin main
             docker exec afifa-expense-app composer install --no-interaction --prefer-dist --optimize-autoloader
